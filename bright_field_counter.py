@@ -42,7 +42,7 @@ def get_min_r(no_of_cicr_list):
 			break
 	return r_min
 
-def get_max_r(no_of_cicr_list):
+def get_max_r(no_of_cicr_list, x, y):
 	r_max = int(math.sqrt(x**2 + y**2))
 	for r in range(len(no_of_cicr_list)-1, -1, -1):
 		if no_of_cicr_list[r] != 0:
@@ -57,20 +57,21 @@ def get_no_circ_list(img, l, r):
 		no_of_cicr_list.append(x)
 	return no_of_cicr_list
 
-path_to_read = '/home/raw/Downloads/growth_study/20.8.18/PI/WT/5f_1.tif'
-# path_to_read = 'sample_images/2b.tif'
-img = cv2.imread(path_to_read, cv2.IMREAD_GRAYSCALE)
-x, y = img.shape
+def get_labelled_bright_field_img(path_to_read):
+	img = cv2.imread(path_to_read, cv2.IMREAD_GRAYSCALE)
+	x, y = img.shape
+	# ideally : int(math.sqrt(x**2 + y**2))
+	# but here we use a smaller max limit
+	no_of_cicr_list = get_no_circ_list(img, 1, int(min(x, y)/4))
+	r_min = get_min_r(no_of_cicr_list)
+	r_max = get_max_r(no_of_cicr_list, x, y)
+	print r_min, r_max
+	cimg, detected_circ_no = get_circles_img(img, r_min, r_max)
+	return cimg, detected_circ_no
 
-# ideally : int(math.sqrt(x**2 + y**2))
-# but here we use a smaller max limit
-no_of_cicr_list = get_no_circ_list(img, 1, int(min(x, y)/4))
-r_min = get_min_r(no_of_cicr_list)
-r_max = get_max_r(no_of_cicr_list)
-print r_min, r_max
-
-
-cimg, detected_circ_no = get_circles_img(img, r_min, r_max)
+# path_to_read = '/home/raw/Downloads/growth_study/20.8.18/PI/WT/5f_1.tif'
+path_to_read = 'sample_images/2b.tif'
+cimg, detected_circ_no = get_labelled_bright_field_img(path_to_read)
 cv2.imshow('detected circles = ' + str(detected_circ_no), cimg)
 cv2.waitKey(0)
 cv2.destroyAllWindows()
