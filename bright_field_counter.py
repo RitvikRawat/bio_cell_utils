@@ -27,7 +27,6 @@ def get_circles_img(img, r_min, r_max):
 def get_no_circ(img, r):
 	img = cv2.medianBlur(img,5)
 	img = cv2.bilateralFilter(img,9,75,75)
-	cimg = cv2.cvtColor(img,cv2.COLOR_GRAY2BGR)
 	circles = cv2.HoughCircles(img,cv2.HOUGH_GRADIENT,1,20,param1=50,param2=30,minRadius=r,maxRadius=r)
 	if circles is not None:
 		return len(circles[0,:])
@@ -69,8 +68,8 @@ def get_labelled_bright_field_img(path_to_read):
 	cimg, detected_circ_no = get_circles_img(img, r_min, r_max)
 	return cimg, detected_circ_no
 
-# path_to_read = '/home/raw/Downloads/growth_study/20.8.18/PI/WT/5f_1.tif'
-path_to_read = 'sample_images/2b.tif'
+path_to_read = '/home/raw/Downloads/growth_study/24.8.18/M/7b.tif'
+# path_to_read = 'sample_images/2b.tif'
 cimg, detected_circ_no = get_labelled_bright_field_img(path_to_read)
 cv2.imshow('detected circles = ' + str(detected_circ_no), cimg)
 cv2.waitKey(0)

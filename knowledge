@@ -1,0 +1,3 @@
+*.b => bright field image
+*.(contains g) => green type image
+*.f => red/blue fingerprint
