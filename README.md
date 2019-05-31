@@ -1,3 +1,3 @@
 # bio_cell_utils
-![Result](sample_images/2b.tif)
-![Result](myimage.png)
+![Input](/sample_images/2b.tif?raw=true&sanitize=true "Title")
+![Result](/counted.png?raw=true "Cells Counted")
