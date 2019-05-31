@@ -61,16 +61,21 @@ def get_labelled_bright_field_img(path_to_read):
 	x, y = img.shape
 	# ideally : int(math.sqrt(x**2 + y**2))
 	# but here we use a smaller max limit
+	# no_of_cicr_list[i] contains circles of radius i+1
 	no_of_cicr_list = get_no_circ_list(img, 1, int(min(x, y)/4))
+	# r_min is the smallest circle found
 	r_min = get_min_r(no_of_cicr_list)
+	# r_max is the largest circle found
 	r_max = get_max_r(no_of_cicr_list, x, y)
-	print r_min, r_max
+	# show circles between the range [r_min, r_max]
 	cimg, detected_circ_no = get_circles_img(img, r_min, r_max)
 	return cimg, detected_circ_no
 
+# path to bright field images
 path_to_read = '/home/raw/Downloads/growth_study/24.8.18/M/7b.tif'
 # path_to_read = 'sample_images/2b.tif'
 cimg, detected_circ_no = get_labelled_bright_field_img(path_to_read)
+print 'detected circles = ' + str(detected_circ_no)
 cv2.imshow('detected circles = ' + str(detected_circ_no), cimg)
 cv2.waitKey(0)
 cv2.destroyAllWindows()
