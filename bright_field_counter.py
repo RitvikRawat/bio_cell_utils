@@ -75,6 +75,7 @@ def get_labelled_bright_field_img(path_to_read):
 path_to_read = '/home/raw/Downloads/growth_study/24.8.18/M/7b.tif'
 # path_to_read = 'sample_images/2b.tif'
 cimg, detected_circ_no = get_labelled_bright_field_img(path_to_read)
+cv2.imwrite('counted.png',cimg)
 print 'detected circles = ' + str(detected_circ_no)
 cv2.imshow('detected circles = ' + str(detected_circ_no), cimg)
 cv2.waitKey(0)
